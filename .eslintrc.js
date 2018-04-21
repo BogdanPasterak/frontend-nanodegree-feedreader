@@ -32,6 +32,7 @@ module.exports = {
     "globals": {
         "allFeeds": true,
         "loadFeed": true,
+        "since": true,
         "var2": false
     }
 };

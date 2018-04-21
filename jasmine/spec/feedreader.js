@@ -22,8 +22,11 @@ $(function() {
          * page?
          */
         it('are defined', function() {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+
+            since('allFeeds is not defined').expect(typeof allFeeds).not.toBe(undefined);
+            since('allFeeds is not Array').expect(Array.isArray(allFeeds)).toBe(true);
+            since('allFeeds is empty').expect(allFeeds.length).not.toBe(0);
+
         });
 
 
@@ -31,22 +34,21 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-        allFeeds.forEach(function(feed) {
-            it('each feed has a URL and that is not empty', function() {
-                expect(feed.url).toBeDefined();
-                expect(feed.url.length).not.toBe(0);
+        allFeeds.forEach(function(feed, index) {
+            it('Item ' + (index + 1) + ' has a URL and that is not empty', function() {
+                since('Item ' + (index + 1) + ' has no URL').expect(feed.hasOwnProperty('url')).toBe(true);
+                since('Item ' + (index + 1) + ' URL is empty').expect(feed.url.length).not.toBe(0);
             });
         });
-
 
         /* HACK: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-        allFeeds.forEach(function(feed) {
-            it('each feed has a name and that is not empty', function() {
-                expect(feed.name).toBeDefined();
-                expect(feed.name.length).not.toBe(0);
+        allFeeds.forEach(function(feed, index) {
+            it('Item ' + (index + 1) + ' has a Name and that is not empty', function() {
+                since('Item ' + (index + 1) + ' has no Name').expect(feed.hasOwnProperty('name')).toBe(true);
+                since('Item ' + (index + 1) + ' Name is empty').expect(feed.name.length).not.toBe(0);
             });
         });
 
@@ -84,6 +86,7 @@ $(function() {
 
     /* HACK: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
+        //var since = require('jasmine2-custom-message');
         let length;
         /* HACK: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -98,13 +101,14 @@ $(function() {
         afterEach(function() {
             // is an elegant form of sending your own message, but requires installation
             // 'jasmine2-custom-message' (https://github.com/avrelian/jasmine2-custom-message)
-            console.log(length);
+            // console.log(length);
         });
 
         it('the .feed has at least one .entry-link', function(done) {
             length = $('.feed .entry-link').length;
 
-            expect(length).toBeGreaterThan(0);
+            since('there is ' + length + ' .entry-link').
+                expect(length).toBeGreaterThan(0);
             done();
         });
 
@@ -126,13 +130,13 @@ $(function() {
             // index will take -1. And great, next will be 0, first in the array !!!
             index = allFeeds.indexOf(allFeeds.filter(feed => feed.name === title.text())[0]);
             //}
+            // console.log(title.text() + '  ' + index );
             // next in allFeeead array
             index++;
             // if last one -> start from 0
             if (index >= allFeeds.length) {
                 index = 0;
             }
-            console.log(title.text() + '  ' + index );
             // before call header is ...
             header = title.text();
 
@@ -145,7 +149,7 @@ $(function() {
 
             index = allFeeds.indexOf(allFeeds.filter(feed => feed.name === title.text())[0]);
             // after call header is ...
-            console.log(title.text() + '  ' + index );
+            // console.log(title.text() + '  ' + index );
         });
 
         it('new feed is loaded that the content actually changes.', function(done) {
