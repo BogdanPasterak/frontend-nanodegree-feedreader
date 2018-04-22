@@ -86,7 +86,7 @@ $(function() {
 
     /* HACK: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
-        //var since = require('jasmine2-custom-message');
+
         let length;
         /* HACK: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
